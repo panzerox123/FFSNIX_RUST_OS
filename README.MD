@@ -1,8 +1,8 @@
 # FF*NIX OS
 
-No bootloader yet. Won't boot. Unsurprisingly. 
+WILL BOOT :D 
 
 ## Compile instructions
 ```
-cargo -Z build-std --target="x86_64-ffnix.json"
+cargo bootimage -Z build-std --target="x86_64-ffnix.json"
 ```
