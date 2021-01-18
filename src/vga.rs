@@ -26,10 +26,25 @@ pub struct textBlock {
 }
 
 
-pub fn writeByte(text_block: textBlock){
-    let VGA_BUFFER = 0xb8000 as *mut u8;
-    unsafe{
-        *VGA_BUFFER.offset(0) = text_block.text;
-        *VGA_BUFFER.offset(1) = ((text_block.bgColor as u8) << 4 | text_block.fgColor as u8) as u8;
+pub fn writeChar(text_block: textBlock, offset: u16){
+    if offset < 2000 {
+        let VGA_BUFFER = 0xb8000 as *mut u8;
+        unsafe{
+            *VGA_BUFFER.offset(2*offset as isize) = text_block.text;
+            *VGA_BUFFER.offset(2*offset as isize + 1) = ((text_block.bgColor as u8) << 4 | text_block.fgColor as u8) as u8;
+        }
+    }
+}
+
+pub fn writeString(text: &[u8], offset: u16){
+    let mut i = 0;
+    for ch in text.iter(){
+        let a = textBlock{
+            text: *ch,
+            fgColor: Color::Black,
+            bgColor: Color::White,
+        };
+        writeChar(a,i);
+        i+=1;
     }
 }

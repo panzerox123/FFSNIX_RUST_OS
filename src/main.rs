@@ -8,12 +8,7 @@ mod vga;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    let a = vga::textBlock {
-        text: 'm' as u8,
-        fgColor: vga::Color::Blue,
-        bgColor: vga::Color::Black,
-    };
-    vga::writeByte(a);
+    vga::writeString(b"Hello, World", 0);
     loop{}
 }
 
